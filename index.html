@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  </head>
+  <body>
+    <p id="path"></p>
+    <h4>主窗口参数：</h4>
+    <table border="1" width="350" style="margin-top: -20px;">
+      <tr height="20">
+        <td  width="50" align="center">x</td>
+        <td  width="50" align="center">y</td>
+        <td  width="50" align="center">宽</td>
+        <td  width="50" align="center">高</td>
+      </tr>
+      <tr height="30" style="color:#10eb59">
+        <td id="X-sty-0" align="center"></td>
+        <td id="Y-sty-0" align="center"></td>
+        <td id="W-sty-0" align="center"></td>
+        <td id="H-sty-0" align="center"></td>
+      </tr>
+    </table>
+    
+    <h5>子窗口1参数：</h5>
+    <p id="main"></p>
+    <table border="1" width="350" style="margin-top: -20px;">
+      <tr height="20">
+        <td  width="50" align="center">x</td>
+        <td  width="50" align="center">y</td>
+        <td  width="50" align="center">宽</td>
+        <td  width="50" align="center">高</td>
+      </tr>
+      <tr height="30" style="color:#f14c4c">
+        <td id="X-sty" align="center"></td>
+        <td id="Y-sty" align="center"></td>
+        <td id="W-sty" align="center"></td>
+        <td id="H-sty" align="center"></td>
+      </tr>
+    </table>
+    <span id="mes" style="margin-bottom: 15px;"></span>
+
+    <h5>子窗口2参数：</h5>
+    <p id="main-2"></p>
+    <table border="1" width="350" style="margin-top: -20px;">
+      <tr height="20">
+        <td  width="50" align="center">x</td>
+        <td  width="50" align="center">y</td>
+        <td  width="50" align="center">宽</td>
+        <td  width="50" align="center">高</td>
+      </tr>
+      <tr height="30" style="color:#f14c4c">
+        <td id="X-sty-2" align="center"></td>
+        <td id="Y-sty-2" align="center"></td>
+        <td id="W-sty-2" align="center"></td>
+        <td id="H-sty-2" align="center"></td>
+      </tr>
+    </table>
+    <p id="mes-2" style="margin-bottom: 15px;"></p>
+
+    <h5>子窗口3参数：</h5>
+    <p id="main-3"></p>
+    <table border="1" width="350" style="margin-top: -20px;">
+      <tr height="20">
+        <td  width="50" align="center">x</td>
+        <td  width="50" align="center">y</td>
+        <td  width="50" align="center">宽</td>
+        <td  width="50" align="center">高</td>
+      </tr>
+      <tr height="30" style="color:#f14c4c">
+        <td id="X-sty-3" align="center"></td>
+        <td id="Y-sty-3" align="center"></td>
+        <td id="W-sty-3" align="center"></td>
+        <td id="H-sty-3" align="center"></td>
+      </tr>
+    </table>
+    <p id="mes-3"></p>
+    <button id="sendToChild1" style="margin-top:20px;">发送信息给子窗口1</button>
+    <script>
+      let path = document.getElementById("path")
+      let sendToChild1 = document.getElementById("sendToChild1")
+      let childCounts = 1;
+      sendToChild1.onclick = function(){
+        ipcRenderer.send("mainMess", childCounts++);
+      }
+      const { contextBridge, ipcRenderer } = require('electron')
+      let X0 = document.getElementById("X-sty-0")
+      let Y0 = document.getElementById("Y-sty-0")
+      let W0 = document.getElementById("W-sty-0")
+      let H0 = document.getElementById("H-sty-0")
+      let Mes0 = document.getElementById("mes-0")
+
+      let X = document.getElementById("X-sty")
+      let Y = document.getElementById("Y-sty")
+      let W = document.getElementById("W-sty")
+      let H = document.getElementById("H-sty")
+      let Mes = document.getElementById("mes")
+
+      let X2 = document.getElementById("X-sty-2")
+      let Y2 = document.getElementById("Y-sty-2")
+      let W2 = document.getElementById("W-sty-2")
+      let H2 = document.getElementById("H-sty-2")
+      let Mes2 = document.getElementById("mes-2")
+
+      let X3 = document.getElementById("X-sty-3")
+      let Y3 = document.getElementById("Y-sty-3")
+      let W3 = document.getElementById("W-sty-3")
+      let H3 = document.getElementById("H-sty-3")
+      let Mes3 = document.getElementById("mes-3")
+
+      ipcRenderer.on('setPath', (event, msg) => {
+        path.innerHTML = `保存窗口数据文件路径：${msg}`;
+      })
+      //接收主窗口信息
+      ipcRenderer.on('updateMain', (event, arg) => {
+        let {x,y,width,height} = arg
+          X0.innerHTML = x
+          Y0.innerHTML = y
+          W0.innerHTML = width
+          H0.innerHTML = height
+      })
+      //接收窗口1信息
+      ipcRenderer.on('update', (event, arg) => {
+        let {x,y,width,height} = arg
+          X.innerHTML = x
+          Y.innerHTML = y
+          W.innerHTML = width
+          H.innerHTML = height
+      })
+      ipcRenderer.on('getChildMessage', (event, arg) => {
+        Mes.innerHTML = `接收到来自子窗口1的数据：${arg}`
+      })
+
+      //接收窗口2信息
+      ipcRenderer.on('update2', (event, arg) => {
+        let {x,y,width,height} = arg
+          X2.innerHTML = x
+          Y2.innerHTML = y
+          W2.innerHTML = width
+          H2.innerHTML = height
+      })
+      ipcRenderer.on('getChildMessage2', (event, arg) => {
+        Mes2.innerHTML = `接收到来自子窗口2的数据：${arg}`
+      })
+
+      //接收窗口3信息
+      ipcRenderer.on('update3', (event, arg) => {
+        let {x,y,width,height} = arg
+          X3.innerHTML = x
+          Y3.innerHTML = y
+          W3.innerHTML = width
+          H3.innerHTML = height
+      })
+      ipcRenderer.on('getChildMessage3', (event, arg) => {
+        Mes3.innerHTML = `接收到来自子窗口2的数据：${arg}`
+      })
+      
+    </script>
+    <!-- <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script> -->
+  </body>
+</html>
