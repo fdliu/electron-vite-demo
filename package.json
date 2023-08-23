@@ -38,6 +38,6 @@
     },
     "dependencies": {
         "@electron/remote": "^2.0.9",
-        "handsontable": "^12.3.1"
+        "handsontable": "^13.0.0"
     }
 }
