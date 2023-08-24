@@ -1,6 +1,8 @@
 # electron-vite-vue
 ![image](/./public/electron.png)
-🥳 Really simple `Electron` + `Vue` + `Vite` boilerplate.
+桌面应用,含主窗口，三个子窗口，窗口间可以互相通信，含菜单栏，可配置，每个窗口相当一个浏览器的tab，窗口内容就是使用前端技术开发的网页内容。
+
+🥳 技术栈： Electron + html + js + Vite，
 
 ```
 下载：
