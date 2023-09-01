@@ -25,7 +25,7 @@
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^4.0.0",
-        "electron": "^23.1.1",
+        "electron": "^26.1.0",
         "electron-builder": "^23.6.0",
         "lodash-id": "^0.14.1",
         "lowdb": "^1.0.0",
